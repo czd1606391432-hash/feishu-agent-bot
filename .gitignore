@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+
+# 本地配置、凭证、数据、日志，不要提交
+.env
+.env.*
+!.env.example
+custom_tools.json
+system_prompt.md
+data/
+*.log

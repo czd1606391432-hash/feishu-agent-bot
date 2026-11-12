@@ -1,0 +1,17 @@
+# /etc/systemd/system/feishu-agent-bot.service
+# 改好路径后: systemctl daemon-reload && systemctl enable --now feishu-agent-bot
+[Unit]
+Description=feishu-agent-bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/srv/feishu-agent-bot
+ExecStart=/srv/feishu-agent-bot/.venv/bin/python main.py
+Restart=always
+RestartSec=5
+# 启用 MCP 时要能找到 node / npx
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=multi-user.target

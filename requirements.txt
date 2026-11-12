@@ -1,0 +1,13 @@
+# 飞书官方 Python SDK（含长连接 WebSocket 客户端）
+lark-oapi>=1.4.15
+
+# OpenAI 兼容协议客户端（DeepSeek / 豆包方舟 / 通义 / 智谱 / OpenAI 皆可）
+openai>=1.68.0
+
+python-dotenv>=1.0.1
+
+# 可选：启用飞书官方工具集（MCP_ENABLED=true）时需要，另需 Node.js
+mcp>=1.9.0
+
+# 可选：切换到 Claude 时启用
+# anthropic>=0.49.0

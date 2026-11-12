@@ -1,0 +1,57 @@
+[
+  {
+    "name": "search_kb",
+    "description": "在 IT 知识库里搜索常见问题的处理办法。用户描述电脑、网络、账号等问题时先用它查。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "q": {"type": "string", "description": "关键词，例如 VPN、打印机"},
+        "limit": {"type": "integer", "description": "最多返回几条，默认 5"}
+      },
+      "required": ["q"]
+    },
+    "request": {
+      "method": "GET",
+      "url": "${DEMO_API_BASE}/kb",
+      "headers": {"X-Api-Token": "${DEMO_API_TOKEN}"},
+      "query": {"q": "{{q}}", "limit": "{{limit}}"},
+      "timeout": 15
+    },
+    "response": {"fields": ["total", "items"], "max_chars": 4000}
+  },
+  {
+    "name": "get_ticket",
+    "description": "按工单号查询报修工单的当前状态。",
+    "parameters": {
+      "type": "object",
+      "properties": {"ticket_id": {"type": "string", "description": "工单号，例如 T-0001"}},
+      "required": ["ticket_id"]
+    },
+    "request": {
+      "method": "GET",
+      "url": "${DEMO_API_BASE}/tickets/{{ticket_id}}",
+      "headers": {"X-Api-Token": "${DEMO_API_TOKEN}"}
+    }
+  },
+  {
+    "name": "create_ticket",
+    "description": "提交一张 IT 报修工单。有副作用：提交前必须先把标题、描述、紧急程度给用户看并得到确认。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {"type": "string", "description": "一句话标题"},
+        "detail": {"type": "string", "description": "问题描述"},
+        "urgency": {"type": "string", "enum": ["普通", "紧急"], "description": "紧急程度，默认普通"}
+      },
+      "required": ["title"]
+    },
+    "request": {
+      "method": "POST",
+      "url": "${DEMO_API_BASE}/tickets",
+      "headers": {"X-Api-Token": "${DEMO_API_TOKEN}"},
+      "json": {"title": "{{title}}", "detail": "{{detail}}", "urgency": "{{urgency}}"},
+      "timeout": 30
+    },
+    "response": {"extract": "data.summary_md"}
+  }
+]
